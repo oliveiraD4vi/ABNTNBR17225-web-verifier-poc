@@ -43,8 +43,36 @@
     });
   }
 
+  function listenHighlight(counter = 0) {
+    const highlightBtn = document.getElementById('highlight');
+
+    chrome.storage.local.get('accessibilityResults', (data) => {
+      const length = data.accessibilityResults?.length || 0;
+
+      if (!length) {
+        highlightBtn.classList.add('d-none');
+        setTimeout(() => listenHighlight(counter + 1), 1000);
+        return;
+      }
+
+      highlightBtn.classList.remove('d-none');
+      highlightBtn.addEventListener('click', () => {
+        highlight();
+      });
+    });
+  }
+
+  function highlight() {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: 'HIGHLIGHT'
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     populateData();
     listenExport();
+    listenHighlight();
   });
 })();
