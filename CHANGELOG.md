@@ -1,5 +1,9 @@
 # Changelog
 
+### [0.0.3] - 2025-06-25
+
+- Adicionado botão de rodar novamente que recalcula as violações
+
 ### [0.0.2] - 2025-06-25
 
 - Adicionado botão 'Mostrar na página'

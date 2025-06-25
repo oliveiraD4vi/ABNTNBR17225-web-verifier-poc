@@ -43,6 +43,16 @@
     });
   }
 
+  function send(event) {
+    if (!event) return;
+
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: event
+      });
+    });
+  }
+
   function listenHighlight(counter = 0) {
     const highlightBtn = document.getElementById('highlight');
 
@@ -57,15 +67,27 @@
 
       highlightBtn.classList.remove('d-none');
       highlightBtn.addEventListener('click', () => {
-        highlight();
+        send('HIGHLIGHT');
       });
     });
   }
 
-  function highlight() {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        action: 'HIGHLIGHT'
+  function listenRerun(counter = 0) {
+    const rerunBtn = document.getElementById('rerun');
+
+    chrome.storage.local.get('accessibilityResults', (data) => {
+      const length = data.accessibilityResults?.length || 0;
+
+      if (!length) {
+        rerunBtn.classList.add('d-none');
+        setTimeout(() => listenRerun(counter + 1), 1000);
+        return;
+      }
+
+      rerunBtn.classList.remove('d-none');
+      rerunBtn.addEventListener('click', () => {
+        send('RERUN');
+        populateData();
       });
     });
   }
@@ -74,5 +96,6 @@
     populateData();
     listenExport();
     listenHighlight();
+    listenRerun();
   });
 })();

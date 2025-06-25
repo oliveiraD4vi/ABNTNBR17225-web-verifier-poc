@@ -25,6 +25,7 @@ code {
 button {
   margin-top: 10px;
   padding: 5px 10px;
+  min-width: 300px;
 }
 
 .d-none {
