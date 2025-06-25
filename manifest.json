@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Verificador de Acessibilidade NBR 17225",
+  "version": "1.0.0",
+  "description": "Verifica requisitos de acessibilidade web conforme a ABNT NBR 17225",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "downloads",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "128": "icons/android-chrome-192x192.png"
+    }
+  },
+  "background": {
+    "service_worker": "scripts/worker/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "scripts/utils.js",
+        "scripts/highlight.js",
+        "scripts/rules.js",
+        "scripts/engine.js",
+        "scripts/content.js"
+      ]
+    }
+  ]
+}
