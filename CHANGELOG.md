@@ -1,5 +1,10 @@
 # Changelog
 
+### [0.0.4] - 2025-06-27
+
+- Ajustado comportamento para analisar por demanda
+- Ajustada organização dos arquivos
+
 ### [0.0.3] - 2025-06-25
 
 - Adicionado botão de rodar novamente que recalcula as violações

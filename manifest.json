@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Verificador de Acessibilidade NBR 17225",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Verifica requisitos de acessibilidade web conforme a ABNT NBR 17225",
   "permissions": [
     "storage",
@@ -22,11 +22,12 @@
     {
       "matches": ["<all_urls>"],
       "js": [
-        "scripts/utils.js",
-        "scripts/highlight.js",
-        "scripts/rules.js",
-        "scripts/engine.js",
-        "scripts/content.js"
+        "utils/utils.js",
+        "scripts/content/highlight.js",
+        "scripts/rules/rules.js",
+        "scripts/content/engine.js",
+        "scripts/content/content.js",
+        "scripts/listener/listener.js"
       ]
     }
   ]

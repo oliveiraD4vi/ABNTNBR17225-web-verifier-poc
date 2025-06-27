@@ -1,4 +1,12 @@
 const VERIFIER_ID = 'ABNTNBR17225';
+const VERIFIER_NAME = 'ABNT NBR 17225 Verifier';
+
+const EVENTS = {
+  RUN: 'RUN',
+  HIGHLIGHT: 'HIGHLIGHT',
+  RERUN: 'RERUN',
+  // POPULATE: 'POPULATE',
+};
 
 const SEVERITY = {
   WARNING: {

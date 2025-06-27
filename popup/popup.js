@@ -1,29 +1,4 @@
 (function() {
-  function listenExport(counter = 0) {
-    const exportBtn = document.getElementById('export');
-
-    chrome.storage.local.get('accessibilityResults', (data) => {
-      const length = data.accessibilityResults?.length || 0;
-      const verifications = data.accessibilityResults?.violations || [];
-
-      if (!length) {
-        exportBtn.classList.add('d-none');
-        setTimeout(() => listenExport(counter + 1), 1000);
-        return;
-      }
-
-      exportBtn.classList.remove('d-none');
-      exportBtn.addEventListener('click', () => {
-        const blob = new Blob([JSON.stringify(verifications, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        chrome.downloads.download({
-          url: url,
-          filename: 'accessiblity-report.json'
-        });
-      });
-    });
-  }
-
   function populateData(counter = 0) {
     const container = document.getElementById('accessiblity-report');
 
@@ -53,49 +28,61 @@
     });
   }
 
-  function listenHighlight(counter = 0) {
-    const highlightBtn = document.getElementById('highlight');
+  function toggleNode(id, shouldShow = null) {
+    const node = document.getElementById(id);
 
-    chrome.storage.local.get('accessibilityResults', (data) => {
-      const length = data.accessibilityResults?.length || 0;
+    if (!node) return;
 
-      if (!length) {
-        highlightBtn.classList.add('d-none');
-        setTimeout(() => listenHighlight(counter + 1), 1000);
-        return;
-      }
-
-      highlightBtn.classList.remove('d-none');
-      highlightBtn.addEventListener('click', () => {
-        send('HIGHLIGHT');
-      });
-    });
+    if (shouldShow == true || (shouldShow == null && node.classList.contains('d-none'))) {
+      node.classList.remove('d-none');
+    } else if (shouldShow == false || (shouldShow == null && !node.classList.contains('d-none'))) {
+      node.classList.add('d-none');
+    }
   }
 
-  function listenRerun(counter = 0) {
-    const rerunBtn = document.getElementById('rerun');
+  function listenButtonClick(id, fn, counter = 0) {
+    const button = document.getElementById(id);
+
+    if (!button) return;
 
     chrome.storage.local.get('accessibilityResults', (data) => {
       const length = data.accessibilityResults?.length || 0;
 
       if (!length) {
-        rerunBtn.classList.add('d-none');
-        setTimeout(() => listenRerun(counter + 1), 1000);
+        setTimeout(() => listenButtonClick(id, fn, counter + 1), 1000);
         return;
       }
 
-      rerunBtn.classList.remove('d-none');
-      rerunBtn.addEventListener('click', () => {
-        send('RERUN');
-        populateData();
-      });
+      const custom = () => fn(data.accessibilityResults);
+
+      button.removeEventListener('click', custom);
+      button.addEventListener('click', custom);
     });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    populateData();
-    listenExport();
-    listenHighlight();
-    listenRerun();
+    // START BUTTON LISTENER
+    listenButtonClick('run', () => {
+      // START ACTION
+      send(EVENTS.RUN);
+      populateData();
+
+      // SHOW OTHER BUTTONS
+      toggleNode('highlight', true);
+      toggleNode('export', true);
+    });
+
+    // OTHER BUTTONS LISTENERS
+    listenButtonClick('highlight', () => {
+      send(EVENTS.HIGHLIGHT);
+    });
+    listenButtonClick('export', ({ violations: verifications }) => {
+      const blob = new Blob([JSON.stringify(verifications, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      chrome.downloads.download({
+        url: url,
+        filename: 'accessiblity-report.json'
+      });
+    });
   });
 })();

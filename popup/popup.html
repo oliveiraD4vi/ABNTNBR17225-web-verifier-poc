@@ -7,13 +7,28 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h1>Verificação ABNT NBR 17225</h1>
-  <div id="accessiblity-report">Carregando...</div>
+  <header>
+    <h1>Verificação ABNT NBR 17225</h1>
+  </header>
 
-  <button id="rerun">Rodar novamente</button>
-  <button id="highlight">Mostrar na página</button>
-  <button id="export">Exportar JSON</button>
+  <div id="accessiblity-report"></div>
 
+  <div class="btn-container">
+    <button id="run">Análisar página</button>
+    <button id="highlight" class="d-none">Mostrar na página</button>
+    <button id="export" class="d-none">Exportar JSON</button>
+  </div>
+
+  <footer>
+    <strong>
+      Made with S2 by
+      <a href="http://www.linkedin.com/in/davi-oliveira-bb7458187" rel="noreferrer" target="_blank">
+        Davi Oliveira
+      </a>
+    </strong>
+  </footer>
+
+  <script src="../utils/utils.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
