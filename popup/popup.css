@@ -1,6 +1,6 @@
 #accessiblity-report {
   background-color: #f3f3f3;
-  border-radius: .5rem;
+  border-radius: .25rem;
   padding: 1rem;
   border: 1px solid #ccc;
   position: relative;
@@ -16,6 +16,11 @@ header > div.title {
   display: flex;
   align-items: center;
   gap: .5rem;
+}
+
+button > svg {
+  width: 14px;
+  height: 14px;
 }
 
 button#rerun > svg {

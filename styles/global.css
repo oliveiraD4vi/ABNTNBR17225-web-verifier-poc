@@ -11,7 +11,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 300px;
+  min-width: 350px;
   margin-bottom: 1rem;
 }
 
@@ -65,8 +65,8 @@ div.btn-container button {
 button {
   font-size: 14px;
   padding: .5rem 1rem;
-  border: none;
-  border-radius: .5rem;
+  border: 1px solid #ebebeb;
+  border-radius: .25rem;
   background-color: #ebebeb;
   color: #222;
   cursor: pointer;
@@ -80,6 +80,7 @@ button {
 button.link {
   background-color: transparent;
   padding: .5rem;
+  border: none;
 }
 
 button:hover {
