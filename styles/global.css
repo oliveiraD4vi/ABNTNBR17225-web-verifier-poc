@@ -51,6 +51,14 @@ code {
   overflow-x: auto;
 }
 
+#accessiblity-report {
+  background-color: #f3f3f3;
+  border-radius: .25rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
 div.btn-container {
   display: grid;
   grid-template-columns: 1fr 1fr;

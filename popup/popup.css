@@ -1,12 +1,4 @@
-#accessiblity-report {
-  background-color: #f3f3f3;
-  border-radius: .25rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  position: relative;
-}
-
-#accessiblity-report>.accessiblity-report--btn#rerun {
+#accessiblity-report>button.accessiblity-report--btn#rerun {
   position: absolute;
   top: .5rem;
   right: .5rem;
@@ -23,7 +15,7 @@ button > svg {
   height: 14px;
 }
 
-button#rerun > svg {
+button.accessiblity-report--btn#rerun > svg {
   width: 1rem;
   height: 1rem;
 }
