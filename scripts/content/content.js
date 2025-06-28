@@ -10,7 +10,7 @@ const run = async () => {
       violations
     }
   }, () => {
-    console.log(`${VERIFIER_ID}: `, violations);
+    console.info(`${VERIFIER_ID}: `, violations);
   });
 };
 

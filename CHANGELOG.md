@@ -4,6 +4,8 @@
 
 - Ajustado comportamento para analisar por demanda
 - Ajustada organização dos arquivos
+- Ajustado layout dos elementos no popup
+- Ajustada lógica para rodar a análise novamente
 
 ### [0.0.3] - 2025-06-25
 

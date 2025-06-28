@@ -1,8 +1,7 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log('Received request:', request.action);
+  console.info('RECEIVED REQUEST:', request.action);
 
   switch (request.action) {
-    case EVENTS.RERUN:
     case EVENTS.RUN:
       run();
       break;

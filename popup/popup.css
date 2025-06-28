@@ -1,16 +1,46 @@
+/* LAYOUT */
 body {
-  font-family: sans-serif;
-  padding: 1rem;
+  padding: .5rem;
   font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  min-width: 300px;
+  margin-bottom: 1rem;
+}
+
+button#rerun > svg,
+header > svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+footer {
+  margin-top: 1rem;
+  padding-top: .5rem;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  border-top: 1px solid #ccc;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
   font-size: 16px;
-  margin-bottom: 10px;
 }
 
 li {
-  margin-bottom: 15px;
+  margin-bottom: .5rem;
 }
 
 code {
@@ -22,12 +52,56 @@ code {
   overflow-x: auto;
 }
 
+div.btn-container {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+
+div.btn-container button {
+  flex: 1;
+  min-width: 0;
+}
+
 button {
-  margin-top: 10px;
-  padding: 5px 10px;
-  min-width: 300px;
+  font-size: 14px;
+  padding: .5rem 1rem;
+  border: none;
+  border-radius: .5rem;
+  background-color: #ebebeb;
+  color: #222;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .3s ease;
+  gap: .5rem;
+}
+
+button.link {
+  background-color: transparent;
+  padding: .5rem;
+}
+
+button:hover {
+  background-color: #dcdcdc;
 }
 
 .d-none {
   display: none;
+}
+
+#accessiblity-report {
+  background-color: #f3f3f3;
+  border-radius: .5rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
+#accessiblity-report>.accessiblity-report--btn#rerun {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
 }

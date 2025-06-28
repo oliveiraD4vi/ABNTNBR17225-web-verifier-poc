@@ -2,6 +2,8 @@
   function populateData(counter = 0) {
     const container = document.getElementById('accessiblity-report');
 
+    if (!container) return;
+
     chrome.storage.local.get('accessibilityResults', (data) => {
       const length = data.accessibilityResults?.length || 0;
       const verifications = data.accessibilityResults?.violations || [];
@@ -11,7 +13,17 @@
         return;
       }
 
-      container.innerHTML = '<p>Violações às regras avaliadas: ' + length + '</p>';
+      toggleNode('accessiblity-report', true);
+
+      if (hasBeenClicked('highlight')) {
+        send(EVENTS.HIGHLIGHT);
+      };
+
+      const content = container.querySelector('.accessiblity-report--content');
+
+      if (!content) return;
+
+      content.innerHTML = '<p>Violações às regras avaliadas: ' + length + '</p>';
 
       // TO-DO
       // ADD VERIFICATIONS TEMPLATE AND CODE
@@ -28,18 +40,6 @@
     });
   }
 
-  function toggleNode(id, shouldShow = null) {
-    const node = document.getElementById(id);
-
-    if (!node) return;
-
-    if (shouldShow == true || (shouldShow == null && node.classList.contains('d-none'))) {
-      node.classList.remove('d-none');
-    } else if (shouldShow == false || (shouldShow == null && !node.classList.contains('d-none'))) {
-      node.classList.add('d-none');
-    }
-  }
-
   function listenButtonClick(id, fn, counter = 0) {
     const button = document.getElementById(id);
 
@@ -53,26 +53,41 @@
         return;
       }
 
-      const custom = () => fn(data.accessibilityResults);
+      const custom = () => {
+        fn(data.accessibilityResults);
+        button.hasBeenClicked = true;
+      }
 
       button.removeEventListener('click', custom);
       button.addEventListener('click', custom);
     });
   }
 
+  function hasBeenClicked(id) {
+    const button = document.getElementById(id);
+    return button && button.hasBeenClicked;
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
-    // START BUTTON LISTENER
-    listenButtonClick('run', () => {
-      // START ACTION
+    const start = () => {
       send(EVENTS.RUN);
       populateData();
+    }
 
-      // SHOW OTHER BUTTONS
+    // FIRST RUN BUTTON LISTENER
+    listenButtonClick('run', () => {
+      start();
+
+      // HANDLE OTHER BUTTONS AFTER FIRST RUN
       toggleNode('highlight', true);
       toggleNode('export', true);
+      removeNode(null, 'run');
     });
 
     // OTHER BUTTONS LISTENERS
+    listenButtonClick('rerun', () => {
+      start();
+    });
     listenButtonClick('highlight', () => {
       send(EVENTS.HIGHLIGHT);
     });

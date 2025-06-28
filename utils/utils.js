@@ -4,7 +4,6 @@ const VERIFIER_NAME = 'ABNT NBR 17225 Verifier';
 const EVENTS = {
   RUN: 'RUN',
   HIGHLIGHT: 'HIGHLIGHT',
-  RERUN: 'RERUN',
   // POPULATE: 'POPULATE',
 };
 
@@ -32,52 +31,7 @@ const SEVERITY = {
   }
 };
 
-// FUNCTION TO WAIT FOR AN ELEMENT BEFORE DOING SOMETHING
-// USE TOGETHER WITH async/await or .then
-// function waitForElem(selector, root) {
-//   return new Promise((resolve) => {
-//     if (root.querySelector(selector)) {
-//       return resolve(root.querySelector(selector));
-//     }
-
-//     const observer = new MutationObserver((mutations) => {
-//       if (root.querySelector(selector)) {
-//         observer.disconnect();
-//         resolve(root.querySelector(selector));
-//       }
-//     });
-
-//     observer.observe(document.body, {
-//       childList: true,
-//       subtree: true,
-//     });
-//   });
-// }
-
-// OBSERVE UNTIL A GIVEN ELEMENT IS DESTROYED OR REMOVED
-// FROM A GIVEN NODE AND CALLS A GIVEN FUNCTION AFTER
-// IT HAPPENS
-// function observeRemoval(element, node, fn) {
-//   try {
-//     if (!element || !node || !fn) return;
-
-//     const observer = new MutationObserver((mutationsList, observer) => {
-//       for (let mutation of mutationsList) {
-//         if (mutation.type === 'childList' && !node.contains(element)) {
-//           fn();
-
-//           observer.disconnect();
-//           break;
-//         }
-//       }
-//     });
-
-//     observer.observe(document.body, { childList: true, subtree: true });
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
+// 
 const getContrast = (hex1, hex2) => {
   const hexToRgb = (hex) => {
     const bigint = parseInt(hex.slice(1), 16);
@@ -112,3 +66,71 @@ const getEffectiveBackgroundColor = (el) => {
   }
   return '#ffffff';
 };
+
+/* HTML HANDLING FUNCTIONS */
+// FUNCTION TO WAIT FOR AN ELEMENT BEFORE DOING SOMETHING
+// USE TOGETHER WITH async/await or .then
+function waitForElem(selector, root) {
+  return new Promise((resolve) => {
+    if (root.querySelector(selector)) {
+      return resolve(root.querySelector(selector));
+    }
+
+    const observer = new MutationObserver((mutations) => {
+      if (root.querySelector(selector)) {
+        observer.disconnect();
+        resolve(root.querySelector(selector));
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  });
+}
+
+// OBSERVE UNTIL A GIVEN ELEMENT IS DESTROYED OR REMOVED
+// FROM A GIVEN NODE AND CALLS A GIVEN FUNCTION AFTER IT HAPPENS
+function observeRemoval(element, node, fn) {
+  try {
+    if (!element || !node || !fn) return;
+
+    const observer = new MutationObserver((mutationsList, observer) => {
+      for (let mutation of mutationsList) {
+        if (mutation.type === 'childList' && !node.contains(element)) {
+          fn();
+
+          observer.disconnect();
+          break;
+        }
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function toggleNode(id, shouldShow = null) {
+  const node = document.getElementById(id);
+
+  if (!node) return;
+
+  if (shouldShow == true || (shouldShow == null && node.classList.contains('d-none'))) {
+    node.classList.remove('d-none');
+  } else if (shouldShow == false || (shouldShow == null && !node.classList.contains('d-none'))) {
+    node.classList.add('d-none');
+  }
+}
+
+function removeNode(node, id = null) {
+  if (id) {
+    node = document.getElementById(id);
+  }
+
+  if (!node) return;
+
+  node.remove();
+}
