@@ -8,8 +8,8 @@
       const length = data.accessibilityResults?.length || 0;
       const verifications = data.accessibilityResults?.violations || [];
 
-      if (!length) {
-        setTimeout(() => populateData(counter + 1), 1000);
+      if (!length || counter < 1) {
+        setTimeout(() => populateData(counter + 1), 100);
         return;
       }
 
@@ -86,6 +86,7 @@
 
     // OTHER BUTTONS LISTENERS
     listenButtonClick('rerun', () => {
+      send(EVENTS.RESET);
       start();
     });
     listenButtonClick('close', () => {

@@ -8,6 +8,8 @@
 - Ajustada lógica para rodar a análise novamente
 - Adicionado evento e métodos para resetar todos os dados e highlights
 - Adicionado botão para resetar dados e fechar popup
+- Ajustado problema de duplicação de ícones
+- Adicionado ID único customizado para cada violação
 
 ### [0.0.3] - 2025-06-25
 

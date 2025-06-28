@@ -12,7 +12,8 @@ async function runAccessibilityAudit(customRules = []) {
           description: rule.description,
           severity: rule.severity,
           message: v.message,
-          snippet: v.snippet
+          snippet: v.snippet,
+          customId: generateCustomId(rule.id)
         });
       });
     } catch (err) {
@@ -34,7 +35,8 @@ async function runAccessibilityAudit(customRules = []) {
         description: item.description,
         severity: item.severity,
         message: item.message,
-        snippet: item.snippet
+        snippet: item.snippet,
+        customId: item.customId,
       });
 
       return acc;

@@ -1,3 +1,5 @@
+/* VARIABLES AND DEFINITIONS */
+
 const VERIFIER_ID = 'ABNTNBR17225';
 const VERIFIER_NAME = 'ABNT NBR 17225 Web Verifier';
 const TOOLTIP_ID = 'accessibility-tooltip-overlay';
@@ -32,7 +34,8 @@ const SEVERITY = {
   }
 };
 
-// 
+/* COLORS */
+
 const getContrast = (hex1, hex2) => {
   const hexToRgb = (hex) => {
     const bigint = parseInt(hex.slice(1), 16);
@@ -69,6 +72,7 @@ const getEffectiveBackgroundColor = (el) => {
 };
 
 /* HTML HANDLING FUNCTIONS */
+
 // FUNCTION TO WAIT FOR AN ELEMENT BEFORE DOING SOMETHING
 // USE TOGETHER WITH async/await or .then
 function waitForElem(selector, root) {
@@ -134,4 +138,21 @@ function removeNode(node, id = null) {
   if (!node) return;
 
   node.remove();
+}
+
+/* CALCULUS */
+
+function generateCustomId(append = '') {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const getRandomChar = () => chars.charAt(Math.floor(Math.random() * chars.length));
+
+  let result = '';
+  for (let i = 0; i < 24; i++) {
+    result += getRandomChar();
+  }
+
+  // Format as 'CCCC-CCCCCCCCCC-CC...'
+  const formatted = `${result.slice(0, 4)}-${result.slice(4, 14)}-${result.slice(14, 24)}`;
+
+  return `${append || VERIFIER_ID.toLowerCase()}-${formatted}`;
 }

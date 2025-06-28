@@ -114,6 +114,13 @@ const setIcon = (el, issue, color, severityIconHTML) => {
 	iconWrapper.style.placeContent = 'center';
 
 	const nodeToAppend = el.parentNode || el;
+  const customIconWrapperClass = issue.customId;
+
+  if (
+    !nodeToAppend ||
+    !!nodeToAppend.querySelector(`.${customIconWrapperClass}`) ||
+    nodeToAppend.classList.contains(customIconWrapperClass)
+  ) return;
 
 	if (window.getComputedStyle(nodeToAppend).position === 'static') {
 		nodeToAppend.style.position = 'relative';
@@ -127,6 +134,7 @@ const setIcon = (el, issue, color, severityIconHTML) => {
 	iconWrapper.style.top = `${offsetTop}px`;
 	iconWrapper.style.left = `${offsetLeft}px`;
   iconWrapper.setAttribute('data-issue-id', `${VERIFIER_ID}-${issue.id}`);
+  iconWrapper.classList.add(customIconWrapperClass);
 
 	iconWrapper.addEventListener('click', (e) => {
 		e.stopPropagation();
