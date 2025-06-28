@@ -10,7 +10,27 @@ const run = async () => {
       violations
     }
   }, () => {
-    console.info(`${VERIFIER_ID}: `, violations);
+    console.log(`${VERIFIER_ID}: `, violations);
+  });
+};
+
+// RESET EVENT
+const resetEvent = () => {
+  reset();
+
+  if (window.violationsCache?.length) {
+    window.violationsCache.forEach(issue => removeHighlight(issue));
+  }
+
+  window.violationsCache = [];
+
+  chrome.storage.local.set({
+    accessibilityResults: {
+      length: 0,
+      violations: []
+    }
+  }, () => {
+    console.log(`${VERIFIER_ID}: RESET COMPLETED`);
   });
 };
 

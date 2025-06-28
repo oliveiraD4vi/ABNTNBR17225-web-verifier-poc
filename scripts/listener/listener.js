@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.info('RECEIVED REQUEST:', request.action);
+  console.log('RECEIVED REQUEST:', request.action);
 
   switch (request.action) {
     case EVENTS.RUN:
@@ -7,6 +7,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       break;
     case EVENTS.HIGHLIGHT:
       highlightEvent();
+      break;
+    case EVENTS.RESET:
+      resetEvent();
       break;
     default:
       break;

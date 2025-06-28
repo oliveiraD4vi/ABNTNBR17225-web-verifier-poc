@@ -6,6 +6,8 @@
 - Ajustada organização dos arquivos
 - Ajustado layout dos elementos no popup
 - Ajustada lógica para rodar a análise novamente
+- Adicionado evento e métodos para resetar todos os dados e highlights
+- Adicionado botão para resetar dados e fechar popup
 
 ### [0.0.3] - 2025-06-25
 

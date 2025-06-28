@@ -1,4 +1,4 @@
-const TOOLTIP_ID = 'accessibility-tooltip-overlay';
+let ICON_REFERENCES = [];
 
 const createTooltip = () => {
 	if (document.getElementById(TOOLTIP_ID)) return;
@@ -80,8 +80,6 @@ const hideTooltip = () => {
 	}
 };
 
-const ICON_REFERENCES = [];
-
 const repositionIcons = () => {
 	ICON_REFERENCES.forEach(({ iconWrapper, el, nodeToAppend }) => {
 		if (!document.body.contains(el)) {
@@ -128,6 +126,7 @@ const setIcon = (el, issue, color, severityIconHTML) => {
 
 	iconWrapper.style.top = `${offsetTop}px`;
 	iconWrapper.style.left = `${offsetLeft}px`;
+  iconWrapper.setAttribute('data-issue-id', `${VERIFIER_ID}-${issue.id}`);
 
 	iconWrapper.addEventListener('click', (e) => {
 		e.stopPropagation();
@@ -140,27 +139,39 @@ const setIcon = (el, issue, color, severityIconHTML) => {
 	ICON_REFERENCES.push({ iconWrapper, el, nodeToAppend, issue });
 };
 
+const getIssueSelector = (issue) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(issue.snippet, 'text/html');
+  const tag = doc.body.firstElementChild;
+
+  if (!tag) return;
+
+  const tagName = tag.tagName.toLowerCase();
+  const classList = [...tag.classList];
+
+  return classList.length
+    ? `${tagName}.${classList.join('.')}`
+    : tagName;
+}
+
+const removeHighlight = (el) => {
+  el.style.borderColor = '';
+  el.style.boxShadow = '';
+  el.removeAttribute('data-issue-id');
+  el.removeEventListener('mousemove', showTooltip);
+  el.removeEventListener('mouseleave', hideTooltip);
+}
+
 const highlight = (issue, color) => {
 	try {
-		const parser = new DOMParser();
-		const doc = parser.parseFromString(issue.snippet, 'text/html');
-		const tag = doc.body.firstElementChild;
-
-		if (!tag) return;
-
-		const tagName = tag.tagName.toLowerCase();
-		const classList = [...tag.classList];
-
-		const selector = classList.length
-			? `${tagName}.${classList.join('.')}`
-			: tagName;
+		const selector = getIssueSelector(issue);
 
 		const matches = document.querySelectorAll(selector);
 
 		matches.forEach(el => {
 			el.style.borderColor = `2px solid ${color}`;
 			el.style.boxShadow = `0px 0px 10px 5px ${color}`;
-			el.setAttribute('data-issue-id', issue.id);
+			el.setAttribute('data-issue-id', `${VERIFIER_ID}-${issue.id}`);
 
 			setIcon(el, issue, color, SEVERITY[issue.severity].icon);
 
@@ -189,4 +200,25 @@ const highlightIssuesBySeverity = (issues) => {
 			highlight(issue, color);
 		});
 	});
+}
+
+const reset = () => {
+  const tooltip = document.getElementById(TOOLTIP_ID);
+
+  if (tooltip) {
+    tooltip.remove();
+  }
+
+  ICON_REFERENCES.forEach(({ iconWrapper }) => {
+    iconWrapper.remove();
+  });
+
+  ICON_REFERENCES = [];
+
+  document.querySelectorAll(`[data-issue-id^="${VERIFIER_ID}-"]`).forEach(el => {
+    removeHighlight(el);
+  });
+
+  window.removeEventListener('scroll', repositionIcons, true);
+  window.removeEventListener('resize', repositionIcons);
 }

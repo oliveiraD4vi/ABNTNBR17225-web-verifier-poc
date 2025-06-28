@@ -1,10 +1,11 @@
 const VERIFIER_ID = 'ABNTNBR17225';
-const VERIFIER_NAME = 'ABNT NBR 17225 Verifier';
+const VERIFIER_NAME = 'ABNT NBR 17225 Web Verifier';
+const TOOLTIP_ID = 'accessibility-tooltip-overlay';
 
 const EVENTS = {
   RUN: 'RUN',
   HIGHLIGHT: 'HIGHLIGHT',
-  // POPULATE: 'POPULATE',
+  RESET: 'RESET',
 };
 
 const SEVERITY = {

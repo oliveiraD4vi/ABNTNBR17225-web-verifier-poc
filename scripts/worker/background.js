@@ -1,3 +1,3 @@
 chrome.runtime.onInstalled.addListener(() => {
-  console.info("ACCESSIBILITY EXTENSION INSTALLED");
+  console.log("ACCESSIBILITY EXTENSION INSTALLED");
 });

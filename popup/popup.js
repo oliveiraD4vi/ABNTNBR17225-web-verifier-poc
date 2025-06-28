@@ -40,7 +40,7 @@
     });
   }
 
-  function listenButtonClick(id, fn, counter = 0) {
+  function listenButtonClick(id, fn, forceListener = false, counter = 0) {
     const button = document.getElementById(id);
 
     if (!button) return;
@@ -48,7 +48,7 @@
     chrome.storage.local.get('accessibilityResults', (data) => {
       const length = data.accessibilityResults?.length || 0;
 
-      if (!length) {
+      if (!length && !forceListener) {
         setTimeout(() => listenButtonClick(id, fn, counter + 1), 1000);
         return;
       }
@@ -82,11 +82,15 @@
       toggleNode('highlight', true);
       toggleNode('export', true);
       removeNode(null, 'run');
-    });
+    }, true);
 
     // OTHER BUTTONS LISTENERS
     listenButtonClick('rerun', () => {
       start();
+    });
+    listenButtonClick('close', () => {
+      send(EVENTS.RESET);
+      window.close();
     });
     listenButtonClick('highlight', () => {
       send(EVENTS.HIGHLIGHT);
