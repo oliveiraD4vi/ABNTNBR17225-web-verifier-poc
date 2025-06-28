@@ -18,7 +18,7 @@
   }
 
   function populateData(counter = 0) {
-    const container = document.getElementById('accessiblity-report');
+    const container = document.getElementById('accessibility-report');
 
     if (!container) return;
 
@@ -31,13 +31,13 @@
         return;
       }
 
-      toggleNode('accessiblity-report', true);
+      toggleLoading();
 
       if (hasBeenClicked('highlight')) {
         sendEvent(EVENTS.HIGHLIGHT);
       };
 
-      const content = container.querySelector('.accessiblity-report--content');
+      const content = container.querySelector('.accessibility-report--content');
 
       if (!content) return;
 
@@ -76,20 +76,37 @@
     return button && button.hasBeenClicked;
   }
 
+  function toggleLoading() {
+    toggleNode('loading');
+
+    const loading = document.getElementById('loading');
+
+    if (!loading) return;
+
+    if (getComputedStyle(loading).display === 'none') {
+      toggleNode('buttons', true);
+      toggleNode('highlight', true);
+      toggleNode('export', true);
+      toggleNode('report', true);
+      toggleNode('accessibility-report', true);
+    } else {
+      toggleNode('buttons', false);
+      toggleNode('accessibility-report', false);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     const start = () => {
+      toggleLoading();
       sendEvent(EVENTS.RUN);
-      populateData();
+      setTimeout(() => populateData(), 1000);
     }
 
     // FIRST RUN BUTTON LISTENER
     listenButtonClick('run', () => {
       start();
 
-      // HANDLE OTHER BUTTONS AFTER FIRST RUN
-      toggleNode('highlight', true);
-      toggleNode('export', true);
-      toggleNode('report', true);
+      // REMOVE BUTTON AFTER FIRST RUN
       removeNode(null, 'run');
     }, true);
 
@@ -110,7 +127,7 @@
       const url = URL.createObjectURL(blob);
       chrome.downloads.download({
         url: url,
-        filename: 'accessiblity-report.json'
+        filename: 'accessibility-report.json'
       });
     });
     listenButtonClick('highlight', () => {

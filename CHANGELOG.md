@@ -1,5 +1,9 @@
 # Changelog
 
+### [0.0.5] - 2025-06-28
+
+- Adicionado loading quando realizando análise da página
+
 ### [0.0.4] - 2025-06-27
 
 - Ajustado comportamento para analisar por demanda

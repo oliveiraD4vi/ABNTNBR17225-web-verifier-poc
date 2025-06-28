@@ -1,4 +1,4 @@
-#accessiblity-report>button.accessiblity-report--btn#rerun {
+#accessibility-report>button.accessibility-report--btn#rerun {
   position: absolute;
   top: .5rem;
   right: .5rem;
@@ -15,7 +15,7 @@ button > svg {
   height: 14px;
 }
 
-button.accessiblity-report--btn#rerun > svg {
+button.accessibility-report--btn#rerun > svg {
   width: 1rem;
   height: 1rem;
 }
@@ -24,3 +24,45 @@ div.btn-container button#run,
 div.btn-container button#report {
   grid-column: span 2;
 }
+
+/* LOADING */
+@keyframes lds-circle {
+  0%, 100% {
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+  }
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(1800deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  }
+  100% {
+    transform: rotateY(3600deg);
+  }
+}
+
+div#loading:not(.d-none) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+div#loading .lds-circle,
+div#loading .lds-circle div {
+  box-sizing: border-box;
+}
+div#loading .lds-circle {
+  display: inline-block;
+  transform: translateZ(1px);
+}
+div#loading .lds-circle > svg {
+  display: inline-block;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: .25rem;
+  animation: lds-circle 5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+/* LOADING */
