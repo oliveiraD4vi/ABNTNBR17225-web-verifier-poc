@@ -10,6 +10,7 @@
 - Adicionado botão para resetar dados e fechar popup
 - Ajustado problema de duplicação de ícones
 - Adicionado ID único customizado para cada violação
+- Adicionada opcão de ver o relatório completo em uma janela avulsa
 
 ### [0.0.3] - 2025-06-25
 

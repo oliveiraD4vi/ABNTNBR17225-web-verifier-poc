@@ -8,6 +8,7 @@ const EVENTS = {
   RUN: 'RUN',
   HIGHLIGHT: 'HIGHLIGHT',
   RESET: 'RESET',
+  OPEN_REPORT: 'OPEN_REPORT',
 };
 
 const SEVERITY = {

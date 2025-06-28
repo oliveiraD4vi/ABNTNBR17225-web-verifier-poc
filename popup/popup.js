@@ -1,4 +1,22 @@
 (function() {
+  function sendEvent(event) {
+    if (!event) return;
+
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: event
+      });
+    });
+  }
+
+  function sendMessage(message) {
+    if (!message) return;
+
+    chrome.runtime.sendMessage({
+      action: message
+    });
+  }
+
   function populateData(counter = 0) {
     const container = document.getElementById('accessiblity-report');
 
@@ -16,7 +34,7 @@
       toggleNode('accessiblity-report', true);
 
       if (hasBeenClicked('highlight')) {
-        send(EVENTS.HIGHLIGHT);
+        sendEvent(EVENTS.HIGHLIGHT);
       };
 
       const content = container.querySelector('.accessiblity-report--content');
@@ -27,16 +45,6 @@
 
       // TO-DO
       // ADD VERIFICATIONS TEMPLATE AND CODE
-    });
-  }
-
-  function send(event) {
-    if (!event) return;
-
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        action: event
-      });
     });
   }
 
@@ -70,7 +78,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     const start = () => {
-      send(EVENTS.RUN);
+      sendEvent(EVENTS.RUN);
       populateData();
     }
 
@@ -81,20 +89,21 @@
       // HANDLE OTHER BUTTONS AFTER FIRST RUN
       toggleNode('highlight', true);
       toggleNode('export', true);
+      toggleNode('report', true);
       removeNode(null, 'run');
     }, true);
 
     // OTHER BUTTONS LISTENERS
+    listenButtonClick('report', () => {
+      sendMessage(EVENTS.OPEN_REPORT);
+    });
     listenButtonClick('rerun', () => {
-      send(EVENTS.RESET);
+      sendEvent(EVENTS.RESET);
       start();
     });
     listenButtonClick('close', () => {
-      send(EVENTS.RESET);
+      sendEvent(EVENTS.RESET);
       window.close();
-    });
-    listenButtonClick('highlight', () => {
-      send(EVENTS.HIGHLIGHT);
     });
     listenButtonClick('export', ({ violations: verifications }) => {
       const blob = new Blob([JSON.stringify(verifications, null, 2)], { type: 'application/json' });
@@ -103,6 +112,9 @@
         url: url,
         filename: 'accessiblity-report.json'
       });
+    });
+    listenButtonClick('highlight', () => {
+      sendEvent(EVENTS.HIGHLIGHT);
     });
   });
 })();

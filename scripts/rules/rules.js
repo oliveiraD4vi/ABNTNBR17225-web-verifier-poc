@@ -55,8 +55,8 @@ const warning = [
             style.display === 'none' ||
             style.visibility === 'hidden' ||
             parseFloat(style.opacity) === 0 ||
-            // parent.offsetParent === null ||
-            // rect.bottom < 0 || rect.top > window.innerHeight ||
+            parent.offsetParent === null ||
+            rect.bottom < 0 || rect.top > window.innerHeight ||
             parent.hasAttribute('aria-hidden') ||
             parent.getAttribute('tabindex') === '-1'
           ) {

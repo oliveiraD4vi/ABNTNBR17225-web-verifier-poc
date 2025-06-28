@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log('RECEIVED REQUEST:', request.action);
+  console.log(`${VERIFIER_ID} EVENT:`, request.action);
 
   switch (request.action) {
     case EVENTS.RUN:
