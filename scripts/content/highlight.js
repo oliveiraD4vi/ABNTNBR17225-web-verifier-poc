@@ -163,11 +163,14 @@ const getIssueSelector = (issue) => {
 }
 
 const removeHighlight = (el) => {
-  el.style.borderColor = '';
+  el.style.border = '';
   el.style.boxShadow = '';
   el.removeAttribute('data-issue-id');
   el.removeEventListener('mousemove', showTooltip);
   el.removeEventListener('mouseleave', hideTooltip);
+
+  // TO-DO
+  // GIVE BACK ALL THE STYLES
 }
 
 const highlight = (issue, color) => {
@@ -179,6 +182,9 @@ const highlight = (issue, color) => {
 		matches.forEach(el => {
 			el.style.border = `5px dashed ${color}`;
 			el.setAttribute('data-issue-id', `${VERIFIER_ID}-${issue.id}`);
+
+      // TO-DO
+      // STORE ALL THE STYLES
 
 			setIcon(el, issue, color, SEVERITY[issue.severity].icon);
 
