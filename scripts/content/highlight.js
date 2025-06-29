@@ -70,6 +70,9 @@ const showTooltip = (event, name, description, iconWrapper) => {
 
 		setTimeout(() => document.addEventListener('click', onClickOutside), 0);
 	};
+
+  // TO-DO
+  // WHEN IT IS BY CLICKING, POSITION SHOULD BE CORRECTED ON SCROLL
 };
 
 const hideTooltip = () => {
@@ -193,6 +196,9 @@ const highlight = (issue, color) => {
 
 			el.addEventListener('mousemove', onMouseMove);
 			el.addEventListener('mouseleave', onMouseLeave);
+
+      // TO-DO
+      // HANDLE ELEMENTS MUTATION WITH OBSERVE REMOVAL
 		});
 
 		window.addEventListener('scroll', repositionIcons, true);

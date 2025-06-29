@@ -54,6 +54,9 @@
           <i>Violações serão listadas abaixo...</i>
         </div>
       `;
+
+      // TO-DO
+      // RENDER ALL VIOLATIONS BY RULE_TYPE
     });
   }
 

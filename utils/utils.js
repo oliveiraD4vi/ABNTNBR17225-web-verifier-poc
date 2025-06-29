@@ -4,6 +4,11 @@ const VERIFIER_ID = 'ABNTNBR17225';
 const VERIFIER_NAME = 'ABNT NBR 17225 Web Verifier';
 const TOOLTIP_ID = 'accessibility-tooltip-overlay';
 
+const RULE_TYPES = {
+  // TO-DO
+  // TYPES FOR EACH TYPE OF RULE
+};
+
 const EVENTS = {
   RUN: 'RUN',
   HIGHLIGHT: 'HIGHLIGHT',

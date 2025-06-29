@@ -17,3 +17,6 @@ const accessibilityRules = [
   ...formRules,
   ...regionRules,
 ];
+
+// TO-DO
+// SET EACH RULE TYPE UPON DECLARATION
