@@ -29,22 +29,17 @@ async function runAccessibilityAudit(customRules = []) {
         acc[severity] = [];
       }
 
-      acc[severity].push({
-        id: item.id,
-        name: item.name,
-        description: item.description,
-        severity: item.severity,
-        message: item.message,
-        snippet: item.snippet,
-        customId: item.customId,
-      });
-
+      acc[severity].push(item);
       return acc;
     }, {});
   }
 
+  const violations = organize(results);
+
   return {
     length: results.length,
-    violations: organize(results),
+    errors: (violations[SEVERITY.ERROR.name] || []).length,
+    warnings: (violations[SEVERITY.WARNING.name] || []).length,
+    violations,
   };
 }

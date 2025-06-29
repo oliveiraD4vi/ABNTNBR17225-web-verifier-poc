@@ -24,6 +24,8 @@
 
     chrome.storage.local.get('accessibilityResults', (data) => {
       const length = data.accessibilityResults?.length || 0;
+      const warnings = data.accessibilityResults?.warnings || 0;
+      const errors = data.accessibilityResults?.errors || 0;
       const verifications = data.accessibilityResults?.violations || [];
 
       if (!length || counter < 1) {
@@ -41,10 +43,17 @@
 
       if (!content) return;
 
-      content.innerHTML = '<p>Violações às regras avaliadas: ' + length + '</p>';
+      content.innerHTML = `
+        <h2>Sumário</h2>
+        <p>Violações às regras avaliadas: <strong>${length}</strong></p>
+        <p class="violations error">Requisitos: <strong>${errors}</strong></p>
+        <p class="violations warning">Recomendações: <strong>${warnings}</strong></p>
 
-      // TO-DO
-      // ADD VERIFICATIONS TEMPLATE AND CODE
+        <div class="accessibility-report--content-violations">
+          <h3>Violações</h3>
+          <i>Violações serão listadas abaixo...</i>
+        </div>
+      `;
     });
   }
 

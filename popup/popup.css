@@ -25,6 +25,26 @@ div.btn-container button#report {
   grid-column: span 2;
 }
 
+#accessibility-report .accessibility-report--content {
+  display: grid;
+  gap: .5rem;
+}
+
+#accessibility-report .accessibility-report--content .accessibility-report--content-violations {
+  border-top: 1px solid #ccc;
+  padding: .5rem 0;
+  display: grid;
+  gap: .5rem;
+}
+
+#accessibility-report .accessibility-report--content > p.violations.error > strong {
+  color: #d9534f;
+}
+
+#accessibility-report .accessibility-report--content > p.violations.warning > strong {
+  color: #f0ad4e;
+}
+
 /* LOADING */
 @keyframes lds-circle {
   0%, 100% {

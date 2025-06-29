@@ -1,7 +1,10 @@
 # Changelog
 
+## -
+
 ### [0.0.6] - 2025-06-29
 
+- Adicionado sumário de violações encontradas
 - Divisão das regras em arquivos por tipo definido:
   - Interação por teclado
   - Imagens, áudios e vídeos

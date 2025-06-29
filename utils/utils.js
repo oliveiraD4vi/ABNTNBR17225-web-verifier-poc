@@ -87,8 +87,6 @@ function toggleNode(id, shouldShow = null) {
 
   if (!node) return;
 
-  console.log(`Toggling node: ${id} - shouldShow: ${shouldShow}`);
-
   if (shouldShow == true || (shouldShow == null && node.classList.contains('d-none'))) {
     node.classList.remove('d-none');
   } else if (shouldShow == false || (shouldShow == null && !node.classList.contains('d-none'))) {

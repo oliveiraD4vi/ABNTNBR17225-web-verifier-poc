@@ -1,13 +1,20 @@
 // RUN
 const run = async () => {
-  const { length, violations } = await runAccessibilityAudit();
+  const {
+    length,
+    violations,
+    warnings,
+    errors,
+  } = await runAccessibilityAudit();
 
   window.violationsCache = violations;
 
   chrome.storage.local.set({
     accessibilityResults: {
       length,
-      violations
+      violations,
+      warnings,
+      errors,
     }
   }, () => {
     console.log(`${VERIFIER_ID}: `, violations);
