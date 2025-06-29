@@ -1,5 +1,24 @@
 # Changelog
 
+### [0.0.6] - 2025-06-29
+
+- Divisão das regras em arquivos por tipo definido:
+  - Interação por teclado
+  - Imagens, áudios e vídeos
+  - Cabeçalhos
+  - Regiões
+  - Listas
+  - Tabelas
+  - Links de navegação
+  - Botões e controles
+  - Formulários e entrada de dados
+  - Apresentação
+  - Uso de cores
+  - Conteúdo textual
+  - Codificação e Marcação semântica
+  - Animação
+  - Tempo
+
 ### [0.0.5] - 2025-06-28
 
 - Adicionado loading quando realizando análise da página

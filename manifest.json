@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Verificador de Acessibilidade NBR 17225",
-  "version": "0.0.5",
-  "description": "Verifica requisitos de acessibilidade web conforme a ABNT NBR 17225",
+  "name": "Verificador de Acessibilidade ABNT NBR 17225",
+  "version": "0.0.6",
+  "description": "Verifica requisitos de acessibilidade web conforme a norma ABNT NBR 17225:2025",
   "permissions": [
     "storage",
     "activeTab",
@@ -13,7 +13,7 @@
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "128": "icons/android-chrome-192x192.png"
+      "128": "assets/icon.png"
     }
   },
   "background": {
@@ -25,9 +25,24 @@
       "js": [
         "utils/utils.js",
         "scripts/content/highlight.js",
+        "scripts/rules/keyboard-interaction.js",
+        "scripts/rules/animations.js",
+        "scripts/rules/buttons-and-controls.js",
+        "scripts/rules/coding.js",
+        "scripts/rules/colors-usage.js",
+        "scripts/rules/forms.js",
+        "scripts/rules/headings.js",
+        "scripts/rules/lists.js",
+        "scripts/rules/media.js",
+        "scripts/rules/navigation.js",
+        "scripts/rules/presentation.js",
+        "scripts/rules/tables.js",
+        "scripts/rules/text-content.js",
+        "scripts/rules/time.js",
+        "scripts/rules/regions.js",
         "scripts/rules/rules.js",
         "scripts/content/engine.js",
-        "scripts/content/content.js",
+        "scripts/content/events.js",
         "scripts/listener/listener.js"
       ]
     }

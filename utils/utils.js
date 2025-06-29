@@ -26,50 +26,13 @@ const SEVERITY = {
       <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
     </svg>`,
   },
-  INFO: {
-    name: 'INFO',
-    color: [0, 0, 255],
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" fill="#fff">
-      <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
-    </svg>`,
-  }
-};
-
-/* COLORS */
-
-const getContrast = (hex1, hex2) => {
-  const hexToRgb = (hex) => {
-    const bigint = parseInt(hex.slice(1), 16);
-    return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
-  };
-  const luminance = (r, g, b) => {
-    const toLinear = (c) => {
-      c /= 255;
-      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-    };
-    return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
-  };
-  const [r1, g1, b1] = hexToRgb(hex1);
-  const [r2, g2, b2] = hexToRgb(hex2);
-  const lum1 = luminance(r1, g1, b1);
-  const lum2 = luminance(r2, g2, b2);
-  return (Math.max(lum1, lum2) + 0.05) / (Math.min(lum1, lum2) + 0.05);
-};
-
-const getEffectiveBackgroundColor = (el) => {
-  while (el) {
-    const style = getComputedStyle(el);
-    const bg = style.backgroundColor;
-    const match = bg.match(/rgba?\((\d+), (\d+), (\d+)/);
-    if (match && style.opacity !== '0' && style.display !== 'none') {
-      const [r, g, b] = [match[1], match[2], match[3]];
-      if (bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
-        return '#' + [r, g, b].map(x => (+x).toString(16).padStart(2, '0')).join('');
-      }
-    }
-    el = el.parentElement;
-  }
-  return '#ffffff';
+  // INFO: {
+  //   name: 'INFO',
+  //   color: [0, 0, 255],
+  //   icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" fill="#fff">
+  //     <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
+  //   </svg>`,
+  // }
 };
 
 /* HTML HANDLING FUNCTIONS */
