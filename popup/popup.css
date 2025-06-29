@@ -38,11 +38,11 @@ div.btn-container button#report {
 }
 
 #accessibility-report .accessibility-report--content > p.violations.error > strong {
-  color: #d9534f;
+  color: #f73e37;
 }
 
 #accessibility-report .accessibility-report--content > p.violations.warning > strong {
-  color: #f0ad4e;
+  color: #fdb147;
 }
 
 /* LOADING */

@@ -108,8 +108,8 @@ const setIcon = (el, issue, color, severityIconHTML) => {
 	iconWrapper.style.zIndex = '10000';
 	iconWrapper.style.background = color;
 	iconWrapper.style.borderRadius = '50%';
-	iconWrapper.style.width = '1.25rem';
-	iconWrapper.style.height = '1.25rem';
+	iconWrapper.style.width = '2rem';
+	iconWrapper.style.height = '2rem';
 	iconWrapper.style.display = 'grid';
 	iconWrapper.style.placeContent = 'center';
 
@@ -177,8 +177,7 @@ const highlight = (issue, color) => {
 		const matches = document.querySelectorAll(selector);
 
 		matches.forEach(el => {
-			el.style.borderColor = `2px solid ${color}`;
-			el.style.boxShadow = `0px 0px 10px 5px ${color}`;
+			el.style.border = `5px dashed ${color}`;
 			el.setAttribute('data-issue-id', `${VERIFIER_ID}-${issue.id}`);
 
 			setIcon(el, issue, color, SEVERITY[issue.severity].icon);
@@ -201,11 +200,8 @@ const highlightIssuesBySeverity = (issues) => {
 	createTooltip();
 
 	Object.entries(issues).forEach(([severity, items]) => {
-		const rgb = SEVERITY[severity]?.color || [0, 0, 0];
-		const color = `rgba(${rgb.join(',')}, 0.5)`;
-
 		items.forEach(issue => {
-			highlight(issue, color);
+			highlight(issue, SEVERITY[severity]?.color);
 		});
 	});
 }
