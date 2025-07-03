@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Verificador de Acessibilidade ABNT NBR 17225",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Verifica requisitos de acessibilidade web conforme a norma ABNT NBR 17225:2025",
   "permissions": [
     "storage",

@@ -21,25 +21,31 @@ async function runAccessibilityAudit(customRules = []) {
     }
   }
 
-  function organize(arr) {
-    return arr.reduce((acc, item) => {
-      const severity = item.severity;
+  function organize(arr, propertyName = 'severity') {
+    if (!Array.isArray(arr) || !arr.length) {
+      return {};
+    }
 
-      if (!acc[severity]) {
-        acc[severity] = [];
+    return arr.reduce((acc, item) => {
+      const property = item[propertyName];
+
+      if (!acc[property]) {
+        acc[property] = [];
       }
 
-      acc[severity].push(item);
+      acc[property].push(item);
       return acc;
     }, {});
   }
 
-  const violations = organize(results);
+  const violationsPerSeverity = organize(results);
+  const violationsPerId = organize(results, 'id');
 
   return {
     length: results.length,
-    errors: (violations[SEVERITY.ERROR.name] || []).length,
-    warnings: (violations[SEVERITY.WARNING.name] || []).length,
-    violations,
+    errors: (violationsPerSeverity[SEVERITY.ERROR.name] || []).length,
+    warnings: (violationsPerSeverity[SEVERITY.WARNING.name] || []).length,
+    violationsPerId,
+    violationsPerSeverity,
   };
 }

@@ -2,22 +2,24 @@
 const run = async () => {
   const {
     length,
-    violations,
+    violationsPerId,
+    violationsPerSeverity,
     warnings,
     errors,
   } = await runAccessibilityAudit();
 
-  window.violationsCache = violations;
+  window.violationsCache = violationsPerSeverity;
 
   chrome.storage.local.set({
     accessibilityResults: {
       length,
-      violations,
+      violations: violationsPerSeverity,
+      violationsPerId,
       warnings,
       errors,
     }
   }, () => {
-    console.log(`${VERIFIER_ID}: `, violations);
+    console.log(`${VERIFIER_ID}: `, violationsPerSeverity, violationsPerId);
   });
 };
 
@@ -34,7 +36,10 @@ const resetEvent = () => {
   chrome.storage.local.set({
     accessibilityResults: {
       length: 0,
-      violations: []
+      warnings: 0,
+      errors: 0,
+      violations: [],
+      violationsPerId: [],
     }
   }, () => {
     console.log(`${VERIFIER_ID}: RESET COMPLETED`);

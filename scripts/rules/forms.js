@@ -4,6 +4,7 @@ const formRules = [
   {
     id: 'input-label',
     name: 'Input sem label',
+    type: RULE_TYPES.FORM,
     description: 'Todo input deve estar associado a um label visível.',
     severity: SEVERITY.WARNING.name,
     check: () => {
@@ -22,6 +23,7 @@ const formRules = [
   {
     id: 'button-name',
     name: 'Botões sem nome acessível',
+    type: RULE_TYPES.FORM,
     description: 'Botões devem ter texto visível ou atributo aria-label.',
     severity: SEVERITY.WARNING.name,
     check: () => {

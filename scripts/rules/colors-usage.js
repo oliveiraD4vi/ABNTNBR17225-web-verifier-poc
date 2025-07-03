@@ -39,6 +39,7 @@ const colorsRules = [
   {
     id: 'contrast-check',
     name: 'Baixo contraste',
+    type: RULE_TYPES.COLOR,
     description: 'Verifica se o contraste entre texto e fundo atende ao mínimo (4.5:1).',
     severity: SEVERITY.ERROR.name,
     check: () => {

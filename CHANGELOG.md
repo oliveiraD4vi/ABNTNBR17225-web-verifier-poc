@@ -1,8 +1,18 @@
 # Changelog
 
-## -
+## [0.0.7] - 2025-07-03
 
-### [0.0.6] - 2025-06-29
+### Changed
+
+- Adicionado relatório simplificado
+- Adicionado relatório detalhado com snippets
+- Alteração nos estilos do sumário e violações
+- Adicionado RULES_TYPE
+- Adicionada organização das violações por id
+
+## [0.0.6] - 2025-06-29
+
+### Changed
 
 - Ajustados estilos de highlight e ícones
 - Adicionado sumário de violações encontradas
@@ -23,11 +33,15 @@
   - Animação
   - Tempo
 
-### [0.0.5] - 2025-06-28
+## [0.0.5] - 2025-06-28
+
+### Changed
 
 - Adicionado loading quando realizando análise da página
 
-### [0.0.4] - 2025-06-27
+## [0.0.4] - 2025-06-27
+
+### Changed
 
 - Ajustado comportamento para analisar por demanda
 - Ajustada organização dos arquivos
@@ -39,16 +53,22 @@
 - Adicionado ID único customizado para cada violação
 - Adicionada opcão de ver o relatório completo em uma janela avulsa
 
-### [0.0.3] - 2025-06-25
+## [0.0.3] - 2025-06-25
+
+### Changed
 
 - Adicionado botão de rodar novamente que recalcula as violações
 
-### [0.0.2] - 2025-06-25
+## [0.0.2] - 2025-06-25
+
+### Changed
 
 - Adicionado botão 'Mostrar na página'
 - Adicionada comunicação entre popup JS e content JS
 
-### [0.0.1] - 2025-06-25
+## [0.0.1] - 2025-06-25
+
+### Changed
 
 - Verificação de regras básicas
 - Alterar nó HTML para ser destacado com sombra

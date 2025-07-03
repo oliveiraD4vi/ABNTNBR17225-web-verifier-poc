@@ -5,8 +5,21 @@ const VERIFIER_NAME = 'ABNT NBR 17225 Web Verifier';
 const TOOLTIP_ID = 'accessibility-tooltip-overlay';
 
 const RULE_TYPES = {
-  // TO-DO
-  // TYPES FOR EACH TYPE OF RULE
+  FORM: 'FORM',
+  LIST: 'LIST',
+  TEXT: 'TEXT',
+  TIME: 'TIME',
+  COLOR: 'COLOR',
+  MEDIA: 'MEDIA',
+  TABLE: 'TABLE',
+  REGION: 'REGION',
+  CODING: 'CODING',
+  HEADING: 'HEADING',
+  ANIMATION: 'ANIMATION',
+  NAVIGATION: 'NAVIGATION',
+  PRESENTATION: 'PRESENTATION',
+  BUTTON_AND_CONTROL: 'BUTTON_AND_CONTROL',
+  KEYBOARD_INTERACTION: 'KEYBOARD_INTERACTION',
 };
 
 const EVENTS = {
@@ -124,4 +137,117 @@ function generateCustomId(append = '') {
   const formatted = `${result.slice(0, 4)}-${result.slice(4, 14)}-${result.slice(14, 24)}`;
 
   return `${append || VERIFIER_ID.toLowerCase()}-${formatted}`;
+}
+
+/* REPORT DATA */
+
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function toggleLoading() {
+  toggleNode('loading');
+
+  const loading = document.getElementById('loading');
+
+  if (!loading) return;
+
+  if (getComputedStyle(loading).display === 'none') {
+    toggleNode('buttons', true);
+    toggleNode('highlight', true);
+    toggleNode('export', true);
+    toggleNode('report', true);
+    toggleNode('accessibility-report', true);
+  } else {
+    toggleNode('buttons', false);
+    toggleNode('accessibility-report', false);
+  }
+}
+
+function hasBeenClicked(id) {
+  const button = document.getElementById(id);
+  return button && button.hasBeenClicked;
+}
+
+function populateData(isReport = false, counter = 0) {
+  const container = document.getElementById('accessibility-report');
+
+  if (!container) return;
+
+  chrome.storage.local.get('accessibilityResults', (data) => {
+    const length = data.accessibilityResults?.length || 0;
+    const warnings = data.accessibilityResults?.warnings || 0;
+    const errors = data.accessibilityResults?.errors || 0;
+    const violationsPerId = data.accessibilityResults?.violationsPerId || {};
+
+    if (!length || counter < 1) {
+      setTimeout(() => populateData(isReport, counter + 1), 100);
+      return;
+    }
+
+    toggleLoading();
+
+    if (hasBeenClicked('highlight')) {
+      sendEvent(EVENTS.HIGHLIGHT);
+    };
+
+    const content = container.querySelector('.accessibility-report--content');
+
+    if (!content) return;
+
+    content.innerHTML = getHTMLForViolations(violationsPerId, length, warnings, errors, isReport);
+  });
+}
+
+function getHTMLForViolations(violationsPerId = {}, length = 0, warnings = 0, errors = 0, isReport = false) {
+  return `
+    <h2>Sumário</h2>
+    <p>Violações às regras avaliadas: <strong>${length}</strong></p>
+    <p>Compostas de:</p>
+    
+    <div class="accessibility-report--content-summary">
+      <p class="violations error"><strong>${errors} ${errors > 1 ? `Requisitos` : `Requisito`}</strong></p>
+      <p class="violations warning"><strong>${warnings} ${warnings > 1 ? `Recomendações` : `Recomendação`}</strong></p>
+    </div>
+
+    <div class="accessibility-report--content-violations">
+      <h3>Violações</h3>
+
+      ${
+        // TO-DO
+        // RENDER PER RULE TYPE
+
+        Object.keys(violationsPerId).map(type => {
+          const violations = violationsPerId[type];
+
+          if (!violations || !violations.length) return '';
+
+          const violation = violations[0];
+
+          return `
+            <div class="violation-type ${violation.severity}">
+              <h4>${violation.name}</h4>
+              <p class="violation-item">Ocorrências: ${violations.length}</p>
+              ${isReport ?
+                `
+                  <p>${violation.description}</p>
+                  <p class="violation-message">${violation.message}</p>
+                  <ul class="violations-list">
+                    ${violations.map(violation => `
+                      <li class="violation-item">
+                        <pre class="violation-snippet">${escapeHtml(violation.snippet?.toString() || '')}</pre>
+                      </li>  
+                    `).join('')}
+                  </ul>
+                ` : ''
+              }
+            </div>
+          `;
+        }).join('')
+      }
+    </div>
+  `;
 }
